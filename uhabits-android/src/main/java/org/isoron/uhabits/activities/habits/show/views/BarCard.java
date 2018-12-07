@@ -107,6 +107,16 @@ public class BarCard extends HabitCard
             HabitsApplication app = (HabitsApplication) appContext;
             taskRunner = app.getComponent().getTaskRunner();
         }
+
+        if (isInEditMode()) initEditMode();
+    }
+
+    private void initEditMode()
+    {
+        int color = PaletteUtils.getAndroidTestColor(1);
+        title.setTextColor(color);
+        chart.setColor(color);
+        chart.populateWithRandomData();
     }
 
     private class RefreshTask implements Task
@@ -137,7 +147,7 @@ public class BarCard extends HabitCard
             if (habit.isNumerical())
             {
                 boolSpinner.setVisibility(GONE);
-                chart.setTarget(habit.getTargetValue());
+                chart.setTarget(habit.getTargetValue() * bucketSize);
             }
             else
             {
